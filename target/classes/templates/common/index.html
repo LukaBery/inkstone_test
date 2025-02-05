@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>로그인</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/login-style.css}">
+
+</head>
+<body>
+<div class="login-container">
+    <div class="login-logo-container">
+        <a class="inkstone-logo" href="/">
+            <img th:src="@{/images/inkstone-logo.png}" alt="logo" width="50"/><span class="">INKSTONE</span>
+        </a>
+    </div>
+    <div class="login-tabs">
+        <div class="login-tab active">회원 로그인</div>
+        <a href="/member/register" class="login-tab" >회원가입</a>
+    </div>
+
+    <form id="member-login" class="login-form" method="POST" action="/login">
+        <label>
+            <input type="text" placeholder="아이디" name="loginId" required>
+        </label>
+        <label>
+            <input type="password" placeholder="비밀번호" name="password" required>
+        </label>
+        <button class="submit-button" type="submit">로그인</button>
+    </form>
+
+    <div class="login-service-container">
+        <a href="/">ID찾기</a>
+        <span class="separator">|</span>
+        <a href="/">비밀번호 찾기</a>
+    </div>
+    <script th:if="${errorMessage}">
+        alert("[[${errorMessage}]]");
+    </script>
+</div>
+</body>
+</html>

@@ -1,0 +1,78 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>회원가입</title>
+  <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" th:href="@{/css/login-style.css}">
+</head>
+<body>
+<div class="login-container">
+
+  <!-- 로고 컨테이너 -->
+  <div class="login-logo-container">
+    <a class="inkstone-logo" href="/">
+      <img th:src="@{/images/inkstone-logo.png}" alt="logo" width="50"/><span class="">INKSTONE</span>
+    </a>
+  </div>
+
+  <!-- 로그인/회원가입 탭 -->
+  <div class="login-tabs">
+    <div class="login-tab active">회원가입</div>
+  </div>
+
+  <!-- 회원가입 폼 -->
+<div class="login-form">
+    <div class="input-group">
+      <label for="name">이름</label>
+      <input type="text" id="name" name="name" placeholder="홍길동" required>
+    </div>
+
+    <div class="input-group">
+      <label for="loginId">아이디</label>
+
+      <div class="input-wrapper">
+        <input type="text" id="loginId" name="loginId" placeholder="아이디를 입력하세요" required>
+          <input type="hidden" id="hiddenLoginId" name="hiddenLoginId">  <!-- ✅ 히든 필드 추가 -->
+          <button type="button" class="check-btn" onclick="checkDuplicateId()">중복 체크</button>
+      </div>
+
+      <span class="input-guide">영문 + 숫자 조합 (6~12자)</span>
+
+    </div>
+
+    <div class="input-group">
+      <label for="password">비밀번호</label>
+      <input type="password" id="password" name="password" placeholder="비밀번호를 입력하세요" required>
+      <span class="input-guide">영문 + 숫자 + 특수문자 (8~16자)</span>
+    </div>
+
+    <div class="input-group">
+      <label for="confirmPassword">비밀번호 확인</label>
+      <input type="password" id="confirmPassword" name="confirmPassword" placeholder="비밀번호를 입력하세요" required>
+      <span id="password-error" class="error-message" style="color: red; display: none;">비밀번호가 일치하지 않습니다.</span>
+    </div>
+
+    <div class="input-group">
+      <label for="phone">전화번호</label>
+      <input type="tel" id="phone" name="phone" placeholder="010-" required>
+      <span class="input-guide">"-" 없이 숫자만 입력</span>
+    </div>
+
+  <button class="submit-button" type="button">회원가입</button>
+</div>
+  <div class="login-service-container">
+    <a href="/">이미 계정이 있으신가요?  로그인</a>
+  </div>
+</div>
+<script th:src="@{/js/register/phone-number-converter.js}" defer></script>
+<script th:src="@{/js/register/check-duplicated-id.js}" defer></script>
+<script th:src="@{/js/register/check-password.js}" defer></script>
+<script th:src="@{/js/register/signup.js}" defer></script>
+<script>
+
+</script>
+</body>
+</html>
