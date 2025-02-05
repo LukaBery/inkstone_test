@@ -1,0 +1,18 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>로그인 성공</title>
+    <link href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" th:href="@{/css/login-style.css}">
+</head>
+<body>
+<div class="success-container">
+
+    <h1>로그인 성공  🎉</h1>
+    <h2>안녕하세요, <span th:text="${name}"></span>님!</h2>
+    <a href="/" class="login-page-button">로그아웃</a>
+</div>
+</body>
+</html>
