@@ -67,7 +67,6 @@ document.querySelector(".submit-button").addEventListener("click", function (eve
                 }
             });
 
-            // ✅ 필드별 에러가 없는 경우 alert로 메시지 표시
             if (!Object.keys(errors).length) {
                 alert(error.message || "알 수 없는 오류 발생");
             }

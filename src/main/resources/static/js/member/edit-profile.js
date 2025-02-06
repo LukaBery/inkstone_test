@@ -4,7 +4,13 @@ document.addEventListener("DOMContentLoaded", function () {
     editButton.addEventListener("click", function () {
         const password = document.getElementById("password").value;
         const name = document.getElementById("name").value;
-        const phone = document.getElementById("phone").value;
+        let phone = document.getElementById("phone").value;
+
+        phone = phone.replace(/-/g, "");
+
+        if (phone.startsWith("010")) {
+            phone = phone.substring(3);
+        }
 
         if (!password || !name || !phone) {
             alert("모든 필드를 입력해주세요.");
