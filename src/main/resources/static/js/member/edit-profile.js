@@ -30,7 +30,9 @@ document.addEventListener("DOMContentLoaded", function () {
                     alert("회원 정보가 수정되었습니다.");
                     window.location.href = "/member/edit-profile";
                 } else {
-                    alert(data.message || "회원 정보 수정에 실패했습니다.");
+                    if (!data.errors || Object.keys(data.errors).length === 0) {
+                        alert(data.message || "회원 정보 수정에 실패했습니다.");
+                    }
                 }
             })
             .catch(error => {
