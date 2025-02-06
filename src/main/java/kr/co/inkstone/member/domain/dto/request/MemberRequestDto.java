@@ -2,6 +2,7 @@ package kr.co.inkstone.member.domain.dto.request;
 
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.Pattern;
+import org.springframework.security.crypto.password.PasswordEncoder;
 
 public record MemberRequestDto(
 
@@ -28,5 +29,15 @@ public record MemberRequestDto(
 ) {
     public boolean isPasswordMatching() {
         return password.equals(confirmPassword);
+    }
+
+    public MemberRequestDto encodePassword(PasswordEncoder passwordEncoder) {
+        return new MemberRequestDto(
+                this.name,
+                this.loginId,
+                passwordEncoder.encode(this.password),
+                passwordEncoder.encode(this.confirmPassword),
+                this.phone
+        );
     }
 }

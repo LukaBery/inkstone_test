@@ -3,11 +3,14 @@ package kr.co.inkstone.member.controller;
 import jakarta.validation.Valid;
 import kr.co.inkstone.common.dto.ApiResponse;
 import kr.co.inkstone.common.exception.DuplicateLoginIdException;
+import kr.co.inkstone.member.domain.dto.request.MemberEditRequestDto;
 import kr.co.inkstone.member.domain.dto.request.MemberRequestDto;
 import kr.co.inkstone.member.domain.dto.response.SignupSuccessResponseDto;
 import kr.co.inkstone.member.service.MemberService;
+import kr.co.inkstone.security.CustomMemberDetails;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.validation.BindingResult;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.*;
@@ -35,8 +38,10 @@ public class MemberRestController {
         }
 
         boolean isDuplicate = memberService.isLoginIdDuplicated(loginId);
+
         Map<String, Boolean> response = new HashMap<>();
         response.put("isDuplicate", isDuplicate);
+
         return  ResponseEntity.ok(ApiResponse.success(response));
 
     }
@@ -58,8 +63,11 @@ public class MemberRestController {
         }
 
         SignupSuccessResponseDto response;
+
         try {
+
             response = memberService.registerMember(requestDto);
+
         }catch (DuplicateLoginIdException e ){
             return ResponseEntity.badRequest().body(ApiResponse.error(e.getMessage(), 400));
 
@@ -68,9 +76,36 @@ public class MemberRestController {
         return ResponseEntity.status(HttpStatus.CREATED).body(ApiResponse.success(response));
     }
 
+    @PatchMapping("/edit-profile")
+    public  ResponseEntity<ApiResponse<?>> editMemberProfile(@Valid @RequestBody MemberEditRequestDto requestDto, BindingResult bindingResult,
+                                                             @AuthenticationPrincipal CustomMemberDetails userDetails){
+
+        if (bindingResult.hasErrors()) {
+            Map<String, String> errors = new HashMap<>();
+            for (FieldError error : bindingResult.getFieldErrors()) {
+                errors.put(error.getField(), error.getDefaultMessage());
+            }
+            return ResponseEntity.badRequest().body(ApiResponse.error("입력값이 유효하지 않습니다.", 400, errors));
+        }
+        try{
+
+            memberService.editProfile(userDetails.getUsername(), requestDto);
+
+        }catch (Exception e){
+
+            throw new DuplicateLoginIdException(e.getMessage());
+        }
+
+        return ResponseEntity.ok(ApiResponse.success("회원정보가 성공적으로 수정되었습니다."));
+
+    }
 
     private boolean isValidLoginId(String loginId) {
         String regex = "^[a-zA-Z0-9]{6,12}$";
         return Pattern.matches(regex, loginId);
     }
+
+
+
+
 }
