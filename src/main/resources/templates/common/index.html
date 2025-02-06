@@ -36,9 +36,14 @@
         <span class="separator">|</span>
         <a href="/">비밀번호 찾기</a>
     </div>
-    <script th:if="${errorMessage}">
-        alert("[[${errorMessage}]]");
-    </script>
+    <script>
+        const urlParams = new URLSearchParams(window.location.search);
+        const errorMessage = urlParams.get('error');
+
+        // 에러 메시지가 있으면 alert 띄우기
+        if (errorMessage) {
+            alert(decodeURIComponent(errorMessage)); // 🔥 한글 깨짐 방지
+        }    </script>
 </div>
 </body>
 </html>
